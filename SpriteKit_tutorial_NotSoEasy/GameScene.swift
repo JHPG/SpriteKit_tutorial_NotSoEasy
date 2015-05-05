@@ -91,6 +91,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     }
     
+    override func update(currentTime: NSTimeInterval) {
+        let ball = self.childNodeWithName(BallCategoryName) as! SKSpriteNode
+        
+        let maxSpeed: CGFloat = 1000.0
+        let speed = sqrt(ball.physicsBody!.velocity.dx * ball.physicsBody!.velocity.dx + ball.physicsBody!.velocity.dy * ball.physicsBody!.velocity.dy)
+        
+        if speed > maxSpeed {
+            ball.physicsBody!.linearDamping = 0.4
+        }
+        else {
+            ball.physicsBody!.linearDamping = 0.0
+        }
+    }
+    
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         var touch = touches.first as! UITouch
         var touchLocation = touch.locationInNode(self)
