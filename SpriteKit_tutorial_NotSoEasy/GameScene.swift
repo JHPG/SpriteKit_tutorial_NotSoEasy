@@ -64,7 +64,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         
         // 1. Store some useful constants
-        let numberOfBlocks = 5
+        let numberOfBlocks = 8
         let blockWidth = SKSpriteNode(imageNamed: "block.png").size.width
         let totalBlocksWidth = blockWidth * CGFloat(numberOfBlocks)
         let padding: CGFloat = 10.0
@@ -76,7 +76,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // 3. Create the blocks and add them to the scene
         for i in 0..<numberOfBlocks {
             let block = SKSpriteNode(imageNamed: "block.png")
-            block.position = CGPointMake(xOffset + CGFloat(CGFloat(i) + 0.5)*blockWidth + CGFloat(i-1)*padding, CGRectGetHeight(frame) * 0.8)
+//            if i > 5{
+//                block.position = CGPointMake(xOffset + CGFloat(CGFloat(i) + 0.5)*blockWidth + CGFloat(i-1)*padding, CGRectGetHeight(frame) * 0.8)
+//            } else {
+                block.position = CGPointMake(xOffset + CGFloat(CGFloat(i) + 0.5)*blockWidth + CGFloat(i-1)*padding, CGRectGetHeight(frame) * 0.8)
+            //}
             block.physicsBody = SKPhysicsBody(rectangleOfSize: block.frame.size)
             block.physicsBody!.allowsRotation = false
             block.physicsBody!.friction = 0.0
@@ -171,7 +175,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if firstBody.categoryBitMask == BallCategory && secondBody.categoryBitMask == BlockCategory {
             secondBody.node!.removeFromParent()
+            
             //TODO: check if the game has been won
+            if isGameWon() {
+                if let mainView = view {
+                    let gameOverScene = GameOverScene.unarchiveFromFile("GameOverScene") as! GameOverScene
+                    gameOverScene.gameWon = true
+                    mainView.presentScene(gameOverScene)
+                }
+            }
+
         }
 
     }
