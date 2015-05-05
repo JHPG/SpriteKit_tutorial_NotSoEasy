@@ -17,6 +17,11 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
+        physicsWorld.gravity = CGVectorMake(0, 0)
+        
+        let ball = childNodeWithName(BallCategoryName) as! SKSpriteNode
+        ball.physicsBody!.applyImpulse(CGVectorMake(10, -10))
+        
         // 1. Create a physics body that borders the screen
         let borderBody = SKPhysicsBody(edgeLoopFromRect: self.frame)
         // 2. Set the friction of that physicsBody to 0
