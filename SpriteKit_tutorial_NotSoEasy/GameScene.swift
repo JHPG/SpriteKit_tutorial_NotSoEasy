@@ -40,6 +40,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.physicsBody!.restitution = 1
         ball.physicsBody!.linearDamping = 0
         ball.physicsBody!.angularDamping = 0
+        ball.physicsBody!.collisionBitMask = PaddleCategory
+
 
         
         // 1. Create a physics body that borders the screen
@@ -82,6 +84,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             block.name = BlockCategoryName
             block.physicsBody!.categoryBitMask = BlockCategory
             block.physicsBody!.dynamic = false
+            block.physicsBody!.collisionBitMask = 0
+
             addChild(block)
         }
 
@@ -157,7 +161,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     }
     
-    
+    func isGameWon() -> Bool {
+        var numberOfBricks = 0
+        self.enumerateChildNodesWithName(BlockCategoryName) {
+            node, stop in
+            numberOfBricks = numberOfBricks + 1
+        }
+        return numberOfBricks == 0
+    }
+
     
     
     
