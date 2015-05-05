@@ -96,7 +96,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let maxSpeed: CGFloat = 1000.0
         let speed = sqrt(ball.physicsBody!.velocity.dx * ball.physicsBody!.velocity.dx + ball.physicsBody!.velocity.dy * ball.physicsBody!.velocity.dy)
-        
+
         if speed > maxSpeed {
             ball.physicsBody!.linearDamping = 0.4
         }
@@ -104,6 +104,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             ball.physicsBody!.linearDamping = 0.0
         }
     }
+
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         var touch = touches.first as! UITouch
