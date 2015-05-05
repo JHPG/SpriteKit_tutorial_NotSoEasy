@@ -419,6 +419,7 @@
 				D640AD051AF81A7E00A6F6B0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D640AD061AF81A7E00A6F6B0 /* Build configuration list for PBXNativeTarget "SpriteKit_tutorial_NotSoEasyTests" */ = {
 			isa = XCConfigurationList;
@@ -427,6 +428,7 @@
 				D640AD081AF81A7E00A6F6B0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
