@@ -32,7 +32,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let ball = childNodeWithName(BallCategoryName) as! SKSpriteNode
         ball.physicsBody!.applyImpulse(CGVectorMake(10, -10))
-        ball.physicsBody!.contactTestBitMask = BottomCategory
+        ball.physicsBody!.contactTestBitMask = BottomCategory | BlockCategory
         
         // Já definido no .sks (só para lembrar dps por código)
         ball.physicsBody!.allowsRotation = false
@@ -61,6 +61,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         paddle.physicsBody!.categoryBitMask = PaddleCategory
 
         
+        // 1. Store some useful constants
+        let numberOfBlocks = 5
+        let blockWidth = SKSpriteNode(imageNamed: "block.png").size.width
+        let totalBlocksWidth = blockWidth * CGFloat(numberOfBlocks)
+        let padding: CGFloat = 10.0
+        let totalPadding = padding * CGFloat(numberOfBlocks - 1)
+        
+        // 2. Calculate the xOffset
+        let xOffset = (CGRectGetWidth(frame) - totalBlocksWidth - totalPadding) / 2
+        
+        // 3. Create the blocks and add them to the scene
+        for i in 0..<numberOfBlocks {
+            let block = SKSpriteNode(imageNamed: "block.png")
+            block.position = CGPointMake(xOffset + CGFloat(CGFloat(i) + 0.5)*blockWidth + CGFloat(i-1)*padding, CGRectGetHeight(frame) * 0.8)
+            block.physicsBody = SKPhysicsBody(rectangleOfSize: block.frame.size)
+            block.physicsBody!.allowsRotation = false
+            block.physicsBody!.friction = 0.0
+            block.physicsBody!.affectedByGravity = false
+            block.name = BlockCategoryName
+            block.physicsBody!.categoryBitMask = BlockCategory
+            block.physicsBody!.dynamic = false
+            addChild(block)
+        }
+
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -125,6 +149,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 mainView.presentScene(gameOverScene)
             }
         }
+        
+        if firstBody.categoryBitMask == BallCategory && secondBody.categoryBitMask == BlockCategory {
+            secondBody.node!.removeFromParent()
+            //TODO: check if the game has been won
+        }
+
     }
     
     
