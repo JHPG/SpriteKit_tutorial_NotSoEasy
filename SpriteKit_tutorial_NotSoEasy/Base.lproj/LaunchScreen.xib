@@ -19,6 +19,9 @@
                     <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="60"/>
                     <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     <nil key="highlightedColor"/>
+                    <variation key="heightClass=compact" misplaced="YES">
+                        <rect key="frame" x="89" y="122" width="304" height="76"/>
+                    </variation>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

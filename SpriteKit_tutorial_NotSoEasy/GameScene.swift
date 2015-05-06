@@ -28,7 +28,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         physicsWorld.gravity = CGVectorMake(0, 0)
         physicsWorld.contactDelegate = self
-
         
         let ball = childNodeWithName(BallCategoryName) as! SKSpriteNode
         ball.physicsBody!.applyImpulse(CGVectorMake(10, -10))
@@ -114,10 +113,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var touch = touches.first as! UITouch
         var touchLocation = touch.locationInNode(self)
         
+        var touchedNode = self.nodeAtPoint(touchLocation)
+        
         if let body = physicsWorld.bodyAtPoint(touchLocation) {
             if body.node!.name == PaddleCategoryName {
                 println("Began touch on paddle")
                 isFingerOnPaddle = true
+            }
+        }
+        
+        actionWithElement(touches, name: "btReload") {
+            let gameOverScene = GameOverScene.unarchiveFromFile("GameOverScene") as! GameOverScene
+            gameOverScene.gameWon = false
+            self.view!.presentScene (gameOverScene)
+        }
+    }
+    
+    func actionWithElement(touches: Set<NSObject>, name: String, function: ()->() ) {
+        
+        var touch = touches.first as! UITouch
+        var touchLocation = touch.locationInNode(self)
+        var touchedNode = self.nodeAtPoint(touchLocation)
+        
+        if touchedNode.name == name {
+            if let mainView = view {
+                function()
             }
         }
     }
